@@ -1,25 +1,38 @@
 package BD;
 
 public class QuickSort {
-    private int[] numbers;
-    private int number;
-
-    public void sort(int[] values) {
-        if (values == null || values.length == 0) {
-            return;
+    public void quickSort(int[] arr, int startIndex, int endIndex){
+        if(startIndex < endIndex){
+            int partition = partition(arr, startIndex, endIndex);
+            quickSort(arr, startIndex, partition - 1);
+            quickSort(arr, partition+1,endIndex);
         }
-        this.numbers = values;
-        number = values.length;
-        quickSort(0, number - 1);
     }
 
-    private void quickSort(int low, int high) {
-        int i = low, j = high;
-        int pivot = numbers[low+(high-low)/2];
-        while (i<=j){
-            while (numbers[i]<pivot){
-                i++;
+    private int partition(int[] arr, int startIndex, int endIndex) {
+        int pivot =arr[startIndex];
+        int left = startIndex;
+        int right = endIndex;
+        while (left!=right){
+            while(left<right&&arr[right]>pivot){
+                right--;
+            }
+            while (left<right&&arr[left]<pivot){
+                left++;
+            }
+            if(left<right){
+                swap(arr,left, right);
             }
         }
+        swap(arr,startIndex,left);
+        return left;
     }
+
+    private void swap(int[] arr, int left, int right) {
+        int temp = arr[left];
+        arr[left] = arr[right];
+        arr[right] = temp;
+    }
+
+
 }
